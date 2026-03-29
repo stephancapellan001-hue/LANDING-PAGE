@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-neon-cyan: #00f2ff;
+  --color-neon-purple: #bc13fe;
+  --color-deep-space: #050505;
+}
+
+@layer base {
+  body {
+    @apply font-sans text-white bg-deep-space;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tighter;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-black/60 backdrop-blur-2xl border border-white/10 shadow-2xl;
+  }
+  
+  .neon-border {
+    @apply border border-neon-cyan/30 shadow-[0_0_30px_rgba(0,242,255,0.15)];
+  }
+  
+  .neon-text {
+    @apply text-neon-cyan shadow-[0_0_15px_rgba(0,242,255,0.4)];
+  }
+
+  .section-padding {
+    @apply py-40 px-6 md:px-12 lg:px-24;
+  }
+
+  .bg-grid-lines {
+    background-image: 
+      linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .corner-accent {
+    @apply relative;
+  }
+  .corner-accent::before, .corner-accent::after {
+    content: '';
+    @apply absolute w-4 h-4 border-neon-cyan/40 transition-all duration-500;
+  }
+  .corner-accent::before {
+    @apply top-0 left-0 border-t border-l;
+  }
+  .corner-accent::after {
+    @apply bottom-0 right-0 border-b border-r;
+  }
+  .corner-accent:hover::before, .corner-accent:hover::after {
+    @apply w-8 h-8 border-neon-cyan;
+  }
+
+  .vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  .terminal-text {
+    @apply font-mono text-[10px] tracking-[0.4em] uppercase opacity-80;
+  }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes reverse-spin {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-reverse-spin {
+  animation: reverse-spin 15s linear infinite;
+}
+
+.scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--color-neon-cyan), transparent);
+  animation: scan 4s linear infinite;
+  opacity: 0.3;
+}
